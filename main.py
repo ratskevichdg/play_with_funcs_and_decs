@@ -8,8 +8,8 @@ name_result_store = {'name': [], 'result': []}
 
 TEMPLATES = {
     'results_list': (
-        'The first decorator takes functions and returns results '
-        'of these function. So, here they are: \n\n{answers}'
+        'The first decorator takes functions and returns results of these function. '
+        'So, here they are: \n\n{answers}'
     ),
     'functions_names': (
         'The second decorator takes functions and returns functions names. '
@@ -20,7 +20,7 @@ TEMPLATES = {
         'And here you can see the result: \n\nname:\t\t\tresult:\n{res}'
     )
 }
-    
+
 
 def save_result(store_list):
     """
@@ -36,6 +36,7 @@ def save_result(store_list):
         return _executor
     return _wrapper
 
+
 def save_function_name(names_list):
     """
     decorator
@@ -44,8 +45,8 @@ def save_function_name(names_list):
     def _dec(func):
         @wraps(func)
         def _exec(*args):
-            names_list.append(func.__name__) 
-            return func(*args)  
+            names_list.append(func.__name__)
+            return func(*args)
         return _exec
     return _dec
 
@@ -60,11 +61,12 @@ def absolute_value(num):
     """
     return abs(num)
 
+
 @save_result(results_store)
 def whole_number(float_num):
     """
-    returns the whole part of a number 
-    
+    returns the whole part of a number
+
     (float -> int)
 
     2.3 -> 2
@@ -72,11 +74,12 @@ def whole_number(float_num):
     """
     return int(float_num)
 
+
 @save_result(results_store)
 def times_two(num):
     """
-    returns the number multiplied by two 
-    
+    returns the number multiplied by two
+
     (int -> int)
 
     2 -> 4
@@ -84,23 +87,25 @@ def times_two(num):
     """
     return num * 2
 
+
 @save_result(results_store)
 def string_length(string):
     """
-    returns the length of string 
-    
+    returns the length of string
+
     (str -> int)
-    
+
     abcd -> 4
     hello -> 5
     """
     return len(string)
 
+
 @save_result(results_store)
 def num_of_words(sentence):
     """
-    returns the length of sentence in words 
-    
+    returns the length of sentence in words
+
     (str -> int)
 
     The Matrix -> 2
@@ -108,11 +113,12 @@ def num_of_words(sentence):
     """
     return len(sentence.split())
 
+
 @save_result(results_store)
 def first_word(sentence):
     """
-    returns first word in sentence 
-    
+    returns first word in sentence
+
     (str -> str)
 
     Game of Thrones -> Game
@@ -120,11 +126,12 @@ def first_word(sentence):
     """
     return sentence.split()[0]
 
+
 @save_result(results_store)
 def unique_letters(string):
     """
-    return the number of unique letters (excluding register) 
-    
+    return the number of unique letters (excluding register)
+
     (str -> int)
 
     abcA -> 3
@@ -132,11 +139,12 @@ def unique_letters(string):
     """
     return len(set(string.lower()))
 
+
 @save_function_name(func_names_store)
 def vowels_num(string):
     """
-    returns the number of vowel letters 
-    
+    returns the number of vowel letters
+
     (str -> int)
 
     abbAc -> 2
@@ -145,11 +153,12 @@ def vowels_num(string):
     pattern = 'eyuioa'
     return (len([letter for letter in string.lower() if letter in pattern]))
 
+
 @save_function_name(func_names_store)
 def is_palindrome(string):
     """
-    returns whether the word is a palindrome 
-    
+    returns whether the word is a palindrome
+
     (str -> bool)
 
     abba -> True
@@ -158,11 +167,12 @@ def is_palindrome(string):
     """
     return string == string[::-1]
 
+
 @save_function_name(func_names_store)
 def repeated_letters(string):
     """
-    returns if string contains only letters and contains repeated letters 
-    
+    returns if string contains only letters and contains repeated letters
+
     (str -> bool)
 
     hello -> True
@@ -177,12 +187,13 @@ def repeated_letters(string):
                 return True
     return False
 
+
 @save_function_name(func_names_store)
 def pow_two_or_three(num):
     """
     returns num to the power of 2 if number is even
-    or num to the power of 3 if number is odd 
-    
+    or num to the power of 3 if number is odd
+
     (int -> int)
 
     2 -> 4
@@ -192,39 +203,43 @@ def pow_two_or_three(num):
         return num ** 2
     return num ** 3
 
+
 @save_function_name(func_names_store)
 def list_elem_sum(nums_list):
     """
-    returns sum of all numbers in list 
-    
+    returns sum of all numbers in list
+
     (list -> int)
     """
     return sum(nums_list)
 
+
 @save_function_name(func_names_store)
 def max_element(nums_list):
     """
-    returns the biggest element in list 
-    
+    returns the biggest element in list
+
     (list -> int)
     """
     return max(nums_list)
 
+
 @save_function_name(func_names_store)
 def low_letters(string):
     """
-    returns string where all letters are lower 
-    
+    returns string where all letters are lower
+
     (str -> str)
     """
     return string.lower()
+
 
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def genome_pair(genome):
     """
-    return genome pair 
-    
+    return genome pair
+
     (str -> str)
 
     AGT -> TCA
@@ -236,22 +251,24 @@ def genome_pair(genome):
         res = res + pairs[code]
     return res
 
+
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def num_of_letter(letter):
     """
-    return number of letter in an alphabet (including register) 
-    
+    return number of letter in an alphabet (including register)
+
     (str -> int)
     """
     return ord(letter) - 96
+
 
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def to_binary(num):
     """
-    returns number in a binary system 
-    
+    returns number in a binary system
+
     (int -> str)
 
     3 -> 11
@@ -259,12 +276,13 @@ def to_binary(num):
     """
     return bin(num)[2:]
 
+
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def ones_num_binary(num):
     """
-    returns the number of ones in its binary notation 
-    
+    returns the number of ones in its binary notation
+
     (int -> int)
 
     2 -> 1
@@ -273,12 +291,13 @@ def ones_num_binary(num):
     """
     return bin(num)[2:].count('1')
 
+
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def censored_string(string):
     """
-    returns string where all elements was replased to asterisk 
-    
+    returns string where all elements was replased to asterisk
+
     (str -> str)
 
     hello -> *****
@@ -286,11 +305,12 @@ def censored_string(string):
     """
     return '*' * len(string)
 
+
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def zero_matrix(num):
-    """ returns zero matrix of size num x num 
-    
+    """ returns zero matrix of size num x num
+
     (int -> list of lists)
 
     2 -> [[0, 0], [0, 0]]
@@ -298,11 +318,12 @@ def zero_matrix(num):
     """
     return [[0 for i in range(num)] for j in range(num)]
 
+
 @save_function_name(name_result_store['name'])
 @save_result(name_result_store['result'])
 def identity_matrix(num):
-    """ returns identity matrix of size num x num 
-    
+    """ returns identity matrix of size num x num
+
     (int -> list of lists)
 
     2 -> [[1, 0], [0, 1]]
@@ -318,13 +339,13 @@ def identity_matrix(num):
 
 def show():
     print(TEMPLATES['results_list'].format(
-        answers='\n'.join(str(i) for i in results_store)), 
+        answers='\n'.join(str(i) for i in results_store)),
         end="\n\n"
         )
 
     print(TEMPLATES['functions_names'].format(
         names='\n'.join(func_names_store))
-        ) 
+        )
 
     res = ''
     for i, j in zip(name_result_store['name'], name_result_store['result']):
@@ -355,6 +376,7 @@ def main():
     zero_matrix(3)
     identity_matrix(6)
     show()
+
 
 if __name__ == '__main__':
     main()
