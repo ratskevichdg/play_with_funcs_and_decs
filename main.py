@@ -8,16 +8,17 @@ name_result_store = {'name': [], 'result': []}
 
 TEMPLATES = {
     'results_list': (
-        'The first decorator takes functions and returns results of these function. '
-        'So, here they are: \n\n{answers}'
+        'The first decorator takes functions and returns results '
+        'of these function. So, here they are: \n\n{answers}'
     ),
     'functions_names': (
         'The second decorator takes functions and returns functions names. '
         'So, here they are: \n\n{names}\n'
     ),
     'name_and_result': (
-        'But some functions I\'ve decorated by first and second decorators together. '
-        'And here you can see the result: \n\nname:\t\t\tresult:\n{res}'
+        'But some functions I\'ve decorated by first and second decorators '
+        'together. And here you can see the result: '
+        '\n\nname:\t\t\tresult:\n{res}'
     )
 }
 
