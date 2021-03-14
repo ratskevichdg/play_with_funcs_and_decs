@@ -282,6 +282,14 @@ def identity_matrix(num):
                 res_matrix[i][j] = 1
     return res_matrix
 
+def show():
+    print(TEMPLATES['results_list'].format(
+        answers = '\n'.join(str(i) for i in results_store)), 
+        end="\n\n"
+        )
+    print(TEMPLATES['funtions_names'].format(
+        names = '\n'.join(func_names_store))
+        )    
 
 def show():
     print(TEMPLATES['results_list'].format(
