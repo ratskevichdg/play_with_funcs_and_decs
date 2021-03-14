@@ -3,49 +3,34 @@ from functools import wraps
 
 results_store = []
 func_names_store = []
-name_result_store = {'name': [], 'result': []}
 
 
 TEMPLATES = {
     'results_list': (
         'The first decorator takes functions and returns results '
-        'of these function. So, here they are: \n\n{answers}'
-    ),
-    'functions_names': (
+        'of these function. So, here they are: \n{answers}'
+        ),
+    'funtions_names': (
         'The second decorator takes functions and returns functions names. '
-        'So, here they are: \n\n{names}\n'
-    ),
-    'name_and_result': (
-        'But some functions I\'ve decorated by first and second decorators together. '
-        'And here you can see the result: \n\nname:\t\t\tresult:\n{res}'
+        'So, here they are: \n{names}'
     )
 }
     
 
 def save_result(store_list):
-    """
-    decorator
-    appends function result to special buffer
-    """
-    def _wrapper(func):
-        @wraps(func)
-        def _executor(*args):
-            res = func(*args)
-            store_list.append(res)
-            return res
-        return _executor
-    return _wrapper
-
-def save_function_name(names_list):
-    """
-    decorator
-    appends function name to special buffer
-    """
     def _dec(func):
         @wraps(func)
-        def _exec(*args):
-            names_list.append(func.__name__) 
-            return func(*args)  
+        def _executor(*args):
+            for arg in args:
+                store_list.append(func(arg))
+        return _executor
+    return _dec
+
+def save_function_name(names_list):
+    def _dec(func):
+        @wraps(func)
+        def _exec(_):
+            names_list.append(func.__name__)    
         return _exec
     return _dec
 
@@ -132,7 +117,7 @@ def unique_letters(string):
     """
     return len(set(string.lower()))
 
-@save_function_name(func_names_store)
+@save_result(results_store)
 def vowels_num(string):
     """
     returns the number of vowel letters 
@@ -145,7 +130,7 @@ def vowels_num(string):
     pattern = 'eyuioa'
     return (len([letter for letter in string.lower() if letter in pattern]))
 
-@save_function_name(func_names_store)
+@save_result(results_store)
 def is_palindrome(string):
     """
     returns whether the word is a palindrome 
@@ -158,7 +143,7 @@ def is_palindrome(string):
     """
     return string == string[::-1]
 
-@save_function_name(func_names_store)
+@save_result(results_store)
 def repeated_letters(string):
     """
     returns if string contains only letters and contains repeated letters 
@@ -219,8 +204,7 @@ def low_letters(string):
     """
     return string.lower()
 
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
+@save_function_name(func_names_store)
 def genome_pair(genome):
     """
     return genome pair 
@@ -236,8 +220,7 @@ def genome_pair(genome):
         res = res + pairs[code]
     return res
 
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
+@save_function_name(func_names_store)
 def num_of_letter(letter):
     """
     return number of letter in an alphabet (including register) 
@@ -246,8 +229,7 @@ def num_of_letter(letter):
     """
     return ord(letter) - 96
 
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
+@save_function_name(func_names_store)
 def to_binary(num):
     """
     returns number in a binary system 
@@ -259,9 +241,8 @@ def to_binary(num):
     """
     return bin(num)[2:]
 
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
-def ones_num_binary(num):
+@save_function_name(func_names_store)
+def ones_num_in_binary(num):
     """
     returns the number of ones in its binary notation 
     
@@ -273,8 +254,7 @@ def ones_num_binary(num):
     """
     return bin(num)[2:].count('1')
 
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
+@save_function_name(func_names_store)
 def censored_string(string):
     """
     returns string where all elements was replased to asterisk 
@@ -286,22 +266,9 @@ def censored_string(string):
     """
     return '*' * len(string)
 
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
-def zero_matrix(num):
-    """ returns zero matrix of size num x num 
-    
-    (int -> list of lists)
-
-    2 -> [[0, 0], [0, 0]]
-    3 -> [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-    """
-    return [[0 for i in range(num)] for j in range(num)]
-
-@save_function_name(name_result_store['name'])
-@save_result(name_result_store['result'])
+@save_function_name(func_names_store)
 def identity_matrix(num):
-    """ returns identity matrix of size num x num 
+    """ returns identity matrix with size num x num 
     
     (int -> list of lists)
 
@@ -315,22 +282,23 @@ def identity_matrix(num):
                 res_matrix[i][j] = 1
     return res_matrix
 
+def show():
+    print(TEMPLATES['results_list'].format(
+        answers = '\n'.join(str(i) for i in results_store)), 
+        end="\n\n"
+        )
+    print(TEMPLATES['funtions_names'].format(
+        names = '\n'.join(func_names_store))
+        )    
 
 def show():
     print(TEMPLATES['results_list'].format(
-        answers='\n'.join(str(i) for i in results_store)), 
+        answers = '\n'.join(str(i) for i in results_store)), 
         end="\n\n"
         )
-
-    print(TEMPLATES['functions_names'].format(
-        names='\n'.join(func_names_store))
-        ) 
-
-    res = ''
-    for i, j in zip(name_result_store['name'], name_result_store['result']):
-        res = '{}{}\t\t{}\n'.format(res, i, str(j))
-    print(TEMPLATES['name_and_result'].format(res=res))
-
+    print(TEMPLATES['funtions_names'].format(
+        names = '\n'.join(func_names_store))
+        )    
 
 def main():
     absolute_value(-42)
@@ -338,7 +306,7 @@ def main():
     times_two(21)
     string_length('Hello, hello!')
     num_of_words('The truth is out there')
-    first_word('One two three')
+    first_word('One, two, three')
     unique_letters('qweasjndjkeqewqwqw')
     vowels_num('qwertyuiop')
     is_palindrome('step on no pets')
@@ -350,9 +318,8 @@ def main():
     genome_pair('TTTATGCCC')
     num_of_letter('g')
     to_binary(1024)
-    ones_num_binary(42)
+    ones_num_in_binary(42)
     censored_string('I\'ll be censored')
-    zero_matrix(3)
     identity_matrix(6)
     show()
 
