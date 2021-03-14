@@ -1,8 +1,21 @@
 from functools import wraps
 
+
 results_store = []
 func_names_store = []
 
+
+TEMPLATES = {
+    'results_list': (
+        'The first decorator takes functions and returns results '
+        'of these function. So, here they are: \n{answers}'
+        ),
+    'funtions_names': (
+        'The second decorator takes functions and returns functions names. '
+        'So, here they are: \n{names}'
+    )
+}
+    
 
 def save_result(store_list):
     def _dec(func):
@@ -269,30 +282,37 @@ def identity_matrix(num):
                 res_matrix[i][j] = 1
     return res_matrix
 
+def show():
+    print(TEMPLATES['results_list'].format(
+        answers = '\n'.join(str(i) for i in results_store)), 
+        end="\n\n"
+        )
+    print(TEMPLATES['funtions_names'].format(
+        names = '\n'.join(func_names_store))
+        )    
 
 def main():
-    absolute_value(-42)
-    whole_number(123.456)
-    times_two(21)
-    string_length('Hello, hello!')
-    num_of_words('The truth is out there')
-    first_word('One, two, three')
-    unique_letters('qweasjndjkeqewqwqw')
-    vowels_num('qwertyuiop')
-    is_palindrome('step on no pets')
-    repeated_letters('Hello')
-    pow_two_or_three(54)
-    list_elem_sum([12, 54, 2, -12, 59])
-    max_element([342, 5, 10000, 1, 34])
-    low_letters('Hello, in future all my LETTERS will BE LOWER')
-    genome_pair('TTTATGCCC')
-    num_of_letter('g')
-    to_binary(1024)
-    ones_num_in_binary(42)
-    censored_string('I\'ll be censored')
-    identity_matrix(6)
-    print(results_store)
-    print(func_names_store)
+    # absolute_value(-42)
+    # whole_number(123.456)
+    # times_two(21)
+    # string_length('Hello, hello!')
+    # num_of_words('The truth is out there')
+    # first_word('One, two, three')
+    # unique_letters('qweasjndjkeqewqwqw')
+    # vowels_num('qwertyuiop')
+    # is_palindrome('step on no pets')
+    # repeated_letters('Hello')
+    # pow_two_or_three(54)
+    # list_elem_sum([12, 54, 2, -12, 59])
+    # max_element([342, 5, 10000, 1, 34])
+    # low_letters('Hello, in future all my LETTERS will BE LOWER')
+    # genome_pair('TTTATGCCC')
+    # num_of_letter('g')
+    # to_binary(1024)
+    # ones_num_in_binary(42)
+    # censored_string('I\'ll be censored')
+    # identity_matrix(6)
+    show()
 
 if __name__ == '__main__':
     main()
